@@ -40,6 +40,7 @@ nnoremap > >>
 noremap - Nzz
 noremap = nzz
 noremap <LEADER><CR> :nohlsearch<CR>
+map <LEADER><LEADER> <ESC>/<++><CR>:nohlsearch<CR>c4i
 " ===
 " === Cursor Movement
 " ===
@@ -129,6 +130,13 @@ noremap ` ~
 
 " Adjacent duplicate words
 noremap <LEADER>dw /\(\<\w\+\>\)\_s*\1
+
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
 call plug#begin('~/.vim/plugged')
 

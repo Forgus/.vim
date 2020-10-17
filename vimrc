@@ -17,6 +17,7 @@ noremap <C-q> :qa<CR>
 noremap S :w<CR>
 noremap s <nop>
 map R :source $MYVIMRC<CR>
+map sd :w !sudo tee %<CR>
 
 " Undo operations
 noremap l u

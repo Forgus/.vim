@@ -25,13 +25,19 @@ noremap  :qa
 xmap <silent>  <Plug>(coc-range-select)
 nmap <silent>  <Plug>(coc-range-select)
 noremap  5
+nnoremap <nowait> <silent>  e :CocList extensions
+map  i l
+map  n h
+map  u k
+map  w w
 nnoremap <nowait> <silent>  p :CocListResume
 nnoremap <nowait> <silent>  k :CocPrev
 nnoremap <nowait> <silent>  j :CocNext
 nnoremap <nowait> <silent>  s :CocList -I symbols
 nnoremap <nowait> <silent>  o :CocList outline
 nnoremap <nowait> <silent>  c :CocList commands
-nnoremap <nowait> <silent>  e :CocList extensions
+vmap  e j
+omap  e j
 nmap  qf <Plug>(coc-fix-current)
 nmap  ac <Plug>(coc-codeaction)
 nnoremap <nowait> <silent>  a :CocList diagnostics
@@ -296,11 +302,12 @@ set ignorecase
 set incsearch
 set laststatus=2
 set modelines=0
-set runtimepath=~/.config/coc/extensions/node_modules/coc-todolist,~/.config/coc/extensions/node_modules/coc-explorer,~/.vim,~/.vim/plugged/vim-airline,~/.vim/plugged/vim-snazzy,~/.vim/plugged/coc.nvim,/usr/share/vim/vimfiles,/usr/share/vim/vim81,/usr/share/vim/vimfiles/after,~/.vim/after,~/.config/coc/extensions/node_modules/coc-snippets
+set runtimepath=~/.vim,~/.vim/plugged/vim-airline,~/.vim/plugged/vim-snazzy,~/.vim/plugged/coc.nvim,~/.config/coc/extensions/node_modules/coc-todolist,~/.config/coc/extensions/node_modules/coc-explorer,/usr/share/vim/vimfiles,/usr/share/vim/vim81,/usr/share/vim/vimfiles/after,~/.config/coc/extensions/node_modules/coc-snippets,~/.vim/after
 set shortmess=filnxtToOSc
 set showcmd
 set smartcase
-set statusline=%{coc#status()}%{get(b:,'coc_current_function','')}
+set splitright
+set statusline=%{coc#status()}%{get(b:,'coc_current_function','')}%{coc#status()}%{get(b:,'coc_current_function','')}
 set updatetime=300
 set wildmenu
 set window=0
@@ -309,18 +316,17 @@ let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~/Downloads/install_packages
+cd ~/.vim
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
 argglobal
 %argdel
-$argadd ~/.vim/vimrc
-edit ~/.vim/vimrc
+$argadd vimrc
+edit vimrc
 set splitbelow splitright
 set nosplitbelow
-set nosplitright
 wincmd t
 set winminheight=0
 set winheight=1
@@ -456,14 +462,15 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 317 - ((25 * winheight(0) + 13) / 27)
+let s:l = 97 - ((19 * winheight(0) + 13) / 27)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-317
+97
 normal! 0
 tabnext 1
-badd +0 ~/.vim/vimrc
+badd +97 vimrc
+badd +0 ~/.config/nvim/init.vim
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
 endif

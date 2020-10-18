@@ -86,6 +86,15 @@ cnoremap <M-b> <S-Left>
 cnoremap <M-w> <S-Right>
 
 
+" ===
+" === Window management
+" ===
+" Use <space> + new arrow keys for moving the cursor around windows
+map <LEADER>w <C-w>w
+map <LEADER>u <C-w>k
+map <LEADER>e <C-w>j
+map <LEADER>n <C-w>h
+map <LEADER>i <C-w>l
 " split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
 noremap su :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
 noremap se :set splitbelow<CR>:split<CR>

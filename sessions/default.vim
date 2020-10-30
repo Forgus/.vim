@@ -5,18 +5,8 @@ set cpo&vim
 inoremap <silent> <expr> <Plug>(coc-snippets-expand-jump) coc#_insert_key('request', 'snippets-expand-jump', 1)
 inoremap <silent> <expr> <Plug>(coc-snippets-expand) coc#_insert_key('request', 'snippets-expand', 1)
 inoremap <silent> <Plug>CocRefresh =coc#_complete()
-inoremap <expr> <C-B> coc#float#has_scroll() ? coc#float#scroll(0) : "\<Left>"
-inoremap <expr> <C-F> coc#float#has_scroll() ? coc#float#scroll(1) : "\<Right>"
-inoremap <silent> <expr> <C-@> coc#refresh()
 inoremap <silent> <expr> <Nul> coc#refresh()
 inoremap <expr> <S-Tab> pumvisible() ? "\" : "\"
-cnoremap <M-w> <S-Right>
-cnoremap <M-b> <S-Left>
-cnoremap <C-N> <Down>
-cnoremap <C-P> <Up>
-cnoremap <C-E> <End>
-cnoremap <C-A> <Home>
-inoremap <C-A> A
 map! <D-v> *
 nnoremap <expr>  coc#float#has_scroll() ? coc#float#scroll(0) : "\"
 noremap  5
@@ -25,19 +15,13 @@ noremap  :qa
 xmap <silent>  <Plug>(coc-range-select)
 nmap <silent>  <Plug>(coc-range-select)
 noremap  5
-nnoremap <nowait> <silent>  e :CocList extensions
-map  i l
-map  n h
-map  u k
-map  w w
 nnoremap <nowait> <silent>  p :CocListResume
 nnoremap <nowait> <silent>  k :CocPrev
 nnoremap <nowait> <silent>  j :CocNext
 nnoremap <nowait> <silent>  s :CocList -I symbols
 nnoremap <nowait> <silent>  o :CocList outline
 nnoremap <nowait> <silent>  c :CocList commands
-vmap  e j
-omap  e j
+nnoremap <nowait> <silent>  e :CocList extensions
 nmap  qf <Plug>(coc-fix-current)
 nmap  ac <Plug>(coc-codeaction)
 nnoremap <nowait> <silent>  a :CocList diagnostics
@@ -47,6 +31,12 @@ xmap  f <Plug>(coc-format-selected)
 nmap  rn <Plug>(coc-rename)
 noremap  dw /\(\<\w\+\>\)\_s*\1
 noremap  sc :set spell!
+map  i l
+map  n h
+vmap  e j
+omap  e j
+map  u k
+map  w w
 noremap    /<++>:nohlsearchc4l
 noremap   :nohlsearch
 map  rc :e ~/.vim/vimrc
@@ -226,7 +216,7 @@ nnoremap <silent> <Plug>(coc-git-chunkinfo) :call coc#rpc#notify('doKeymap', [
 nnoremap <silent> <Plug>(coc-git-prevchunk) :call coc#rpc#notify('doKeymap', ['git-prevchunk'])
 nnoremap <silent> <Plug>(coc-git-nextchunk) :call coc#rpc#notify('doKeymap', ['git-nextchunk'])
 vnoremap <silent> <Plug>NetrwBrowseXVis :call netrw#BrowseXVis()
-nnoremap <silent> <Plug>NetrwBrowseX :call netrw#BrowseX(netrw#GX(),netrw#CheckIfRemote(netrw#GX()))
+nnoremap <silent> <Plug>NetrwBrowseX :call netrw#BrowseX(expand((exists("g:netrw_gx")? g:netrw_gx : '<cfile>')),netrw#CheckIfRemote())
 onoremap <silent> <Plug>(coc-classobj-a) :call coc#rpc#request('selectSymbolRange', [v:false, '', ['Interface', 'Struct', 'Class']])
 onoremap <silent> <Plug>(coc-classobj-i) :call coc#rpc#request('selectSymbolRange', [v:true, '', ['Interface', 'Struct', 'Class']])
 vnoremap <silent> <Plug>(coc-classobj-a) :call coc#rpc#request('selectSymbolRange', [v:false, visualmode(), ['Interface', 'Struct', 'Class']])
@@ -265,17 +255,10 @@ nnoremap <Plug>(coc-codelens-action) :call       CocActionAsync('codeLensActio
 nnoremap <Plug>(coc-range-select) :call       CocActionAsync('rangeSelect',     '', v:true)
 vnoremap <silent> <Plug>(coc-range-select-backward) :call       CocActionAsync('rangeSelect',     visualmode(), v:false)
 vnoremap <silent> <Plug>(coc-range-select) :call       CocActionAsync('rangeSelect',     visualmode(), v:true)
-xmap <silent> <C-S> <Plug>(coc-range-select)
-nmap <silent> <C-S> <Plug>(coc-range-select)
-nnoremap <expr> <C-B> coc#float#has_scroll() ? coc#float#scroll(0) : "\"
-nnoremap <expr> <C-F> coc#float#has_scroll() ? coc#float#scroll(1) : "\"
 noremap <Right> :vertical resize+5
 noremap <Left> :vertical resize-5
 noremap <Down> :res -5
 noremap <Up> :res +5
-noremap <C-E> 5
-noremap <C-U> 5
-noremap <C-Q> :qa
 vmap <BS> "-d
 vmap <D-x> "*d
 vmap <D-c> "*y
@@ -292,7 +275,6 @@ cnoremap  <Up>
 let &cpo=s:cpo_save
 unlet s:cpo_save
 set background=dark
-set backspace=2
 set cmdheight=2
 set fileencodings=ucs-bom,utf-8,default,latin1
 set helplang=cn
@@ -301,16 +283,14 @@ set hlsearch
 set ignorecase
 set incsearch
 set laststatus=2
-set modelines=0
-set runtimepath=~/.vim,~/.vim/plugged/vim-airline,~/.vim/plugged/vim-snazzy,~/.vim/plugged/coc.nvim,~/.config/coc/extensions/node_modules/coc-todolist,~/.config/coc/extensions/node_modules/coc-explorer,/usr/share/vim/vimfiles,/usr/share/vim/vim81,/usr/share/vim/vimfiles/after,~/.config/coc/extensions/node_modules/coc-snippets,~/.vim/after
-set shortmess=filnxtToOSc
+set runtimepath=~/.config/coc/extensions/node_modules/coc-todolist,~/.vim,~/.vim/plugged/vim-airline,~/.vim/plugged/vim-snazzy,~/.vim/plugged/coc.nvim,/usr/local/share/vim/vimfiles,/usr/local/share/vim/vim81,/usr/local/share/vim/vimfiles/after,~/.vim/after,~/.config/coc/extensions/node_modules/coc-explorer,~/.config/coc/extensions/node_modules/coc-snippets
+set shortmess=filnxtToOc
 set showcmd
 set smartcase
-set splitright
-set statusline=%{coc#status()}%{get(b:,'coc_current_function','')}%{coc#status()}%{get(b:,'coc_current_function','')}
+set statusline=%{coc#status()}%{get(b:,'coc_current_function','')}
+set termguicolors
 set updatetime=300
 set wildmenu
-set window=0
 set nowritebackup
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
@@ -327,6 +307,7 @@ $argadd vimrc
 edit vimrc
 set splitbelow splitright
 set nosplitbelow
+set nosplitright
 wincmd t
 set winminheight=0
 set winheight=1
@@ -345,8 +326,11 @@ vnoremap <buffer> <silent> ][ m':exe "normal! gv"|call search('^\s*endf\%[unc
 nnoremap <buffer> <silent> ][ m':call search('^\s*endf\%[unction]\>', "W")
 vnoremap <buffer> <silent> ]] m':exe "normal! gv"|call search('^\s*fu\%[nction]\>', "W")
 nnoremap <buffer> <silent> ]] m':call search('^\s*fu\%[nction]\>', "W")
+setlocal keymap=
+setlocal noarabic
 setlocal noautoindent
 setlocal backupcopy=
+setlocal balloonexpr=
 setlocal nobinary
 setlocal nobreakindent
 setlocal breakindentopt=
@@ -361,6 +345,8 @@ setlocal colorcolumn=
 setlocal comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",:\"
 setlocal commentstring=\"%s
 setlocal complete=.,w,b,u,t,i
+setlocal concealcursor=
+setlocal conceallevel=0
 setlocal completefunc=
 setlocal nocopyindent
 setlocal cryptmethod=
@@ -368,7 +354,6 @@ setlocal nocursorbind
 setlocal nocursorcolumn
 set cursorline
 setlocal cursorline
-setlocal cursorlineopt=both
 setlocal define=
 setlocal dictionary=
 setlocal nodiff
@@ -424,14 +409,15 @@ setlocal quoteescape=\\
 setlocal noreadonly
 set relativenumber
 setlocal relativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
 setlocal noscrollbind
 setlocal scrolloff=-1
 setlocal shiftwidth=8
 setlocal noshortname
-setlocal showbreak=
 setlocal sidescrolloff=-1
-set signcolumn=number
-setlocal signcolumn=number
+set signcolumn=yes
+setlocal signcolumn=yes
 setlocal nosmartindent
 setlocal softtabstop=0
 setlocal nospell
@@ -447,7 +433,6 @@ setlocal syntax=vim
 endif
 setlocal tabstop=8
 setlocal tagcase=
-setlocal tagfunc=
 setlocal tags=
 setlocal termwinkey=
 setlocal termwinscroll=10000
@@ -456,33 +441,32 @@ setlocal textwidth=78
 setlocal thesaurus=
 setlocal noundofile
 setlocal undolevels=-123456
-setlocal wincolor=
+setlocal varsofttabstop=
+setlocal vartabstop=
 setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 97 - ((19 * winheight(0) + 13) / 27)
+let s:l = 166 - ((12 * winheight(0) + 11) / 23)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-97
+166
 normal! 0
 tabnext 1
-badd +97 vimrc
-badd +0 ~/.config/nvim/init.vim
+badd +0 vimrc
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
 endif
 unlet! s:wipebuf
-set winheight=1 winwidth=20 shortmess=filnxtToOSc
+set winheight=1 winwidth=20 shortmess=filnxtToOc
 set winminheight=1 winminwidth=1
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if file_readable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &so = s:so_save | let &siso = s:siso_save
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

@@ -22,13 +22,6 @@ noremap s <nop>
 map R :source $MYVIMRC<CR>
 map sd :w !sudo tee %<CR>
 
-" Undo operations
-noremap l u
-
-" Insert Key
-noremap k i
-noremap K I
-
 " make Y to copy till the end of the line
 nnoremap Y y$
 
@@ -47,25 +40,10 @@ map <LEADER><LEADER> <ESC>/<++><CR>:nohlsearch<CR>c4i
 " ===
 " === Cursor Movement
 " ===
-" New cursor movement (the default arrow keys are used for resizing windows)
-"     ^
-"     u
-" < n   i >
-"     e
-"     v
-noremap <silent> u k
-noremap <silent> n h
-noremap <silent> e j
-noremap <silent> i l
-noremap <silent> U 5k
-noremap <silent> E 5j
-noremap <silent> N 0
-noremap <silent> I $
+noremap <silent> K 5k
+noremap <silent> J 5j
 noremap W 5w
 noremap B 5b
-" Ctrl + U or E will move up/down the view port without moving the cursor
-noremap <C-U> 5<C-y>
-noremap <C-E> 5<C-e>
 
 
 " ===
@@ -86,15 +64,6 @@ cnoremap <M-b> <S-Left>
 cnoremap <M-w> <S-Right>
 
 
-" ===
-" === Window management
-" ===
-" Use <space> + new arrow keys for moving the cursor around windows
-map <LEADER>w <C-w>w
-map <LEADER>u <C-w>k
-map <LEADER>e <C-w>j
-map <LEADER>n <C-w>h
-map <LEADER>i <C-w>l
 " split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
 noremap su :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
 noremap se :set splitbelow<CR>:split<CR>
